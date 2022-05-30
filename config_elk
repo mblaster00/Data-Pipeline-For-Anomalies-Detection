@@ -1,0 +1,52 @@
+Changed password for user apm_system
+PASSWORD apm_system = RB1X4rjhWFI9NYrdq6Ta
+
+Changed password for user kibana_system
+PASSWORD kibana_system = YbOfAY4CO7VbZoB9vxj5
+
+Changed password for user kibana
+PASSWORD kibana = YbOfAY4CO7VbZoB9vxj5
+
+Changed password for user logstash_system
+PASSWORD logstash_system = 1FbseK4f1wFdkU7FE8Er
+
+Changed password for user beats_system
+PASSWORD beats_system = xX7kHkDtzZ9GlkrchylW
+
+Changed password for user remote_monitoring_user
+PASSWORD remote_monitoring_user = bLwJS0R5FPcXb6yAuFKl
+
+Changed password for user elastic
+PASSWORD elastic = 0Xc537rcFuen7lpBZqwf
+
+
+
+======================================================================================================================
+
+
+
+Config-Elk
+-> Elasticsearch security features have been automatically configured!
+-> Authentication is enabled and cluster connections are encrypted.
+
+->  Password for the elastic user (reset with `bin/elasticsearch-reset-password -u elastic`):
+  QG8i0w9C2nnCy7lqByD3
+
+->  HTTP CA certificate SHA-256 fingerprint:
+  c5bd91f75c47d0f46e6ddb9ab36ead50eba2ad4d80819dd597d0b71b1e538f19
+
+->  Configure Kibana to use this cluster:
+* Run Kibana and click the configuration link in the terminal when Kibana starts.
+* Copy the following enrollment token and paste it into Kibana in your browser (valid for the next 30 minutes):
+  eyJ2ZXIiOiI4LjEuMiIsImFkciI6WyIxNzIuMTguMC4yOjkyMDAiXSwiZmdyIjoiYzViZDkxZjc1YzQ3ZDBmNDZlNmRkYjlhYjM2ZWFkNTBlYmEyYWQ0ZDgwODE5ZGQ1OTdkMGI3MWIxZTUzOGYxOSIsImtleSI6Ii1MTTBHWUFCcmFOSC1xcDQxQjZ2OlBZcUhLRFV4U3NpT0lJUzl0RlN2LVEifQ==
+
+-> Configure other nodes to join this cluster:
+* Copy the following enrollment token and start new Elasticsearch nodes with `bin/elasticsearch --enrollment-token <token>` (valid for the next 30 minutes):
+  eyJ2ZXIiOiI4LjEuMiIsImFkciI6WyIxNzIuMTguMC4yOjkyMDAiXSwiZmdyIjoiYzViZDkxZjc1YzQ3ZDBmNDZlNmRkYjlhYjM2ZWFkNTBlYmEyYWQ0ZDgwODE5ZGQ1OTdkMGI3MWIxZTUzOGYxOSIsImtleSI6Ii1yTTBHWUFCcmFOSC1xcDQxQjdZOjh6S29ldThsVEo2VE01a3ExQ1N6X2cifQ==
+
+  If you're running in Docker, copy the enrollment token and run:
+  `docker run -e "ENROLLMENT_TOKEN=<token>" docker.elastic.co/elasticsearch/elasticsearch:8.1.2`
+
+
+
+-> `elastic password: ce+xBfC-8d1ulspVR+aH`
