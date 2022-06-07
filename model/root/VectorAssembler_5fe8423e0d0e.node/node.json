@@ -1,0 +1,28 @@
+{
+  "name": "VectorAssembler_5fe8423e0d0e",
+  "shape": {
+    "inputs": [{
+      "port": "input0",
+      "name": "total_count"
+    }, {
+      "port": "input1",
+      "name": "request_time_mean"
+    }, {
+      "port": "input2",
+      "name": "daily_counts"
+    }, {
+      "port": "input3",
+      "name": "is_weekend_ratio"
+    }, {
+      "port": "input4",
+      "name": "td_max"
+    }, {
+      "port": "input5",
+      "name": "td_mean"
+    }],
+    "outputs": [{
+      "port": "output",
+      "name": "features"
+    }]
+  }
+}
