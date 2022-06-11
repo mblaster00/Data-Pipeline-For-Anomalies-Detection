@@ -1,0 +1,1 @@
+{"buildTargets":["data","data/iris","data/iris/iris.data","help","make","raw-data","sbt-assembly","sbt-docker-build","target"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

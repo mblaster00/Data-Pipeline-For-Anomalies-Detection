@@ -1,7 +1,7 @@
 
 // The simplest possible sbt build file is just one line:
 
-scalaVersion := "2.13.8"
+
 // That is, to create a valid sbt build, all you've got to do is define the
 // version of Scala you'd like your project to use.
 
@@ -13,9 +13,9 @@ scalaVersion := "2.13.8"
 
 // It's possible to define many kinds of settings, such as:
 
-name := "hello-world"
-organization := "ch.epfl.scala"
-version := "1.0"
+// name := "hello-world"
+
+// version := "1.0"
 
 // Note, it's not required for you to define these three settings. These are
 // mostly only necessary if you intend to publish your library's binaries on a
@@ -75,3 +75,51 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % 
 
 // To learn more about multi-project builds, head over to the official sbt
 // documentation at http://www.scala-sbt.org/documentation.html
+name := "log-access-streams"
+organization := "ch.epfl.scala"
+version := "1.0"
+scalaVersion := "2.12.10"
+exportJars := true
+
+lazy val root = (project in file(".")).
+  settings(
+    inThisBuild(List(
+      organization := "ch.epfl.scala",
+      scalaVersion := "2.12.10"
+    )),
+    libraryDependencies ++= Seq(
+            "org.scalatest" %% "scalatest" % "3.1.0" % Test,
+            "org.apache.kafka" % "kafka-streams-test-utils" % "2.4.0" % Test,
+            "org.apache.kafka" %% "kafka-streams-scala" % "2.4.0",
+            "ml.combust.bundle" %% "bundle-ml" % "0.14.0",
+            "ml.combust.mleap" %% "mleap-runtime" % "0.14.0",
+            "com.jsuereth" %% "scala-arm" % "2.0",
+        ),
+        assemblyMergeStrategy in assembly := {
+            case PathList("org", "apache", "spark", "unused", "UnusedStubClass.class") => MergeStrategy.first
+            case "module-info.class" => MergeStrategy.discard
+            case x =>
+                val oldStrategy = (assemblyMergeStrategy in assembly).value
+                oldStrategy(x)
+        },
+    name := "log-access-streams"
+  )
+
+// lazy val iris = (project in file("."))
+//     .settings(
+//         libraryDependencies ++= Seq(
+//             "org.scalatest" %% "scalatest" % "3.1.0" % Test,
+//             "org.apache.kafka" % "kafka-streams-test-utils" % "2.4.0" % Test,
+//             "org.apache.kafka" %% "kafka-streams-scala" % "2.4.0",
+//             "ml.combust.bundle" %% "bundle-ml" % "0.14.0",
+//             "ml.combust.mleap" %% "mleap-runtime" % "0.14.0",
+//             "com.jsuereth" %% "scala-arm" % "2.0",
+//         ),
+//         assemblyMergeStrategy in assembly := {
+//             case PathList("org", "apache", "spark", "unused", "UnusedStubClass.class") => MergeStrategy.first
+//             case "module-info.class" => MergeStrategy.discard
+//             case x =>
+//                 val oldStrategy = (assemblyMergeStrategy in assembly).value
+//                 oldStrategy(x)
+//         }
+//     )

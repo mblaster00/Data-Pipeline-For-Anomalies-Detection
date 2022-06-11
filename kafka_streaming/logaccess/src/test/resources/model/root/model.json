@@ -1,0 +1,9 @@
+{
+  "op": "pipeline",
+  "attributes": {
+    "nodes": {
+      "string": ["VectorAssembler_5fe8423e0d0e", "KMeans_e3255d9bc770"],
+      "type": "list"
+    }
+  }
+}

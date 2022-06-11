@@ -1,4 +1,4 @@
-package kafka.iris
+package kafka.logaccess
 
 import java.util.Properties
 import java.time.Duration
@@ -11,16 +11,15 @@ import ml.combust.mleap.runtime.MleapSupport._
 import ml.combust.mleap.runtime.frame.{DefaultLeapFrame, Row}
 import resource._
 
-
-
-object IrisModel {
+object LogAccessModel {
 
     val schema: StructType = StructType(
-        StructField("sepal_length_cm", ScalarType.Double),
-        StructField("sepal_width_cm", ScalarType.Double),
-        StructField("petal_length_cm", ScalarType.Double),
-        StructField("petal_width_cm", ScalarType.Double),
-        StructField("class", ScalarType.String)
+        StructField("total_count", ScalarType.Double),
+        StructField("request_time_mean", ScalarType.Double),
+        StructField("daily_counts", ScalarType.Double),
+        StructField("is_weekend_ratio", ScalarType.Double),
+        StructField("td_mean", ScalarType.Double),
+        StructField("td_max", ScalarType.Double)
     ).get
 
     val modelpath = getClass.getResource("/model").getPath
@@ -32,55 +31,57 @@ object IrisModel {
     ).tried.get.root
 
     def score(
-        sepal_length_cm: Double, sepal_width_cm: Double,
-        petal_length_cm: Double, petal_width_cm: Double
-    ): String = {
+        total_count: Double, request_time_mean: Double,
+        daily_counts: Double, td_mean: Double,
+        is_weekend_ratio: Double, td_max: Double
+    ): Integer = {
 
         model.transform(
             DefaultLeapFrame(
                 schema, 
-                Seq(Row(sepal_length_cm, sepal_width_cm, petal_length_cm, petal_width_cm, "Iris-setosa"))
+                Seq(Row(total_count, request_time_mean, daily_counts, is_weekend_ratio, td_mean, td_max))
             )
-        ).get.select("predictedLabel").get.dataset.map(_.getString(0)).head
+        ).get.select("prediction").get.dataset.map(_.getInt(0)).head
     
     }
 
 }
 
 
-object IrisStreamClassifier extends App {
+object LogAccessStreamClassifier extends App {
 
     import org.apache.kafka.streams.scala.Serdes._
     import org.apache.kafka.streams.scala.ImplicitConversions._
 
     val config: Properties = {
         val p = new Properties()
-        p.put(StreamsConfig.APPLICATION_ID_CONFIG, "iris-classifier")
+        p.put(StreamsConfig.APPLICATION_ID_CONFIG, "logaccess-classifier")
         val bootstrapServers = if (args.length > 0) args(0) else "kafka:9092"
         p.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
         p
     }
 
-    def irisStreamClassifier(
+    def logaccessStreamClassifier(
         inputTopic: String, outputTopic: String
     ): Topology = {
 
         val builder: StreamsBuilder = new StreamsBuilder()
-        val irisInput = builder.stream[String, String](inputTopic)
-        val irisScore: KStream[String, String] = irisInput.map(
+        val logaccessInput = builder.stream[String, String](inputTopic)
+        val logaccessScore: KStream[String, String] = logaccessInput.map(
             (_, value) => {
-                val iris_values = value.split(",").map(_.toDouble)
-                ("", Seq(value, IrisModel.score(iris_values(0), iris_values(1), iris_values(2), iris_values(3))).mkString(","))
+                val logaccess_values = value.split(",").map(_.toDouble)
+                ("", Seq(value, LogAccessModel.score(logaccess_values(0), logaccess_values(1), logaccess_values(2), 
+                logaccess_values(3), logaccess_values(4), logaccess_values(5))).mkString(","))
             }
         )
-        irisScore.to(outputTopic)
+        logaccessScore.to(outputTopic)
         builder.build()
     }
 
     val streams: KafkaStreams = new KafkaStreams(
-        irisStreamClassifier(
-            "iris-classifier-input",
-            "iris-classifier-output"
+        logaccessStreamClassifier(
+            "logaccess-classifier-input",
+            "logaccess-classifier-output"
         ), config
     )
     streams.start()
