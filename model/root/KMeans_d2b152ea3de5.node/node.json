@@ -1,0 +1,13 @@
+{
+  "name": "KMeans_d2b152ea3de5",
+  "shape": {
+    "inputs": [{
+      "port": "features",
+      "name": "features"
+    }],
+    "outputs": [{
+      "port": "prediction",
+      "name": "prediction"
+    }]
+  }
+}

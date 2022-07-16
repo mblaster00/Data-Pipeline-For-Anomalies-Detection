@@ -2,7 +2,7 @@
   "op": "pipeline",
   "attributes": {
     "nodes": {
-      "string": ["VectorAssembler_63f29a1e0668", "KMeans_4987aeaf08c1"],
+      "string": ["VectorAssembler_4d776e17f23e", "KMeans_d2b152ea3de5"],
       "type": "list"
     }
   }

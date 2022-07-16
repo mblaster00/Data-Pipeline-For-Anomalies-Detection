@@ -1,0 +1,34 @@
+{
+  "name": "VectorAssembler_4d776e17f23e",
+  "shape": {
+    "inputs": [{
+      "port": "input0",
+      "name": "total_count"
+    }, {
+      "port": "input1",
+      "name": "request_time_mean"
+    }, {
+      "port": "input2",
+      "name": "daily_counts"
+    }, {
+      "port": "input3",
+      "name": "bytes_sent_mean"
+    }, {
+      "port": "input4",
+      "name": "upstream_response_mean"
+    }, {
+      "port": "input5",
+      "name": "status_code_4XX_sum"
+    }, {
+      "port": "input6",
+      "name": "status_code_5XX_sum"
+    }, {
+      "port": "input7",
+      "name": "is_weekend_ratio"
+    }],
+    "outputs": [{
+      "port": "output",
+      "name": "features"
+    }]
+  }
+}
